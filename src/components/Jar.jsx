@@ -50,19 +50,7 @@ function Jar({ goals }) {
     // Jar 바닥
     
     // Jar 입구 위쪽 안전벽
-    walls.push(
-      Matter.Bodies.rectangle(
-        width / 2,
-        155,
-        240,
-        12,
-        {
-          isStatic: true,
-          restitution: 0.25,
-          friction: 0.8,
-        }
-      )
-    )
+
     // 왼쪽 아래 벽
     walls.push(
     Matter.Bodies.rectangle(
@@ -271,16 +259,16 @@ const handleTilt = (event) => {
   const beta = event.beta ?? 0
 
   const x = Math.max(-1, Math.min(1, gamma / 45))
-  const y = Math.max(-1, Math.min(1, beta / 45))
+const y = Math.max(-1, Math.min(1, beta / 45))
 
-  if (engineRef.current) {
-    engineRef.current.gravity.x = x * 1.8
-    engineRef.current.gravity.y = y * 1.8
+if (engineRef.current) {
+  engineRef.current.gravity.x = x * 1.8
+  engineRef.current.gravity.y = y * 1.8
 
-    bodiesRef.current.forEach((body) => {
-      Matter.Sleeping.set(body, false)
-    })
-  }
+  bodiesRef.current.forEach((body) => {
+    Matter.Sleeping.set(body, false)
+  })
+}
 }
 
   window.addEventListener(
