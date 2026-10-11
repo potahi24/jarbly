@@ -276,12 +276,17 @@ function Jar({ goals }) {
       Math.min(1, beta / 45)
     )
 
+    
     if (engineRef.current) {
       engineRef.current.gravity.x = x * 1.1
-      // 아래 방향 중력은 유지
-      engineRef.current.gravity.y = 1.1
 
-      // 잠들어 있는 Goal들을 다시 깨움
+      // 앞뒤 기울기도 반영하되,
+      // 중력이 완전히 뒤집히지 않도록 제한
+      engineRef.current.gravity.y = Math.max(
+        0.25,
+        Math.min(1.8, 1.1 + y * 0.7)
+      )
+
       bodiesRef.current.forEach((body) => {
         Matter.Sleeping.set(body, false)
       })
@@ -358,9 +363,9 @@ function Jar({ goals }) {
           startY,
           radius,
           {
-            restitution: 0.5,
-            friction: 0.7,
-            frictionAir: 0.012,
+            restitution: 0.65,
+            friction: 0.35,
+            frictionAir: 0.005,
             density: 0.002,
 
             // 충분히 안정되면 Matter가
