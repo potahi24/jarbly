@@ -43,7 +43,21 @@ function Jar({ goals }) {
     */
 
     // Jar 바닥
-    // 왼쪽 아래 벽
+    
+    // Jar 입구 위쪽 안전벽
+    walls.push(
+      Matter.Bodies.rectangle(
+        width / 2,
+        155,
+        240,
+        12,
+        {
+          isStatic: true,
+          restitution: 0.25,
+          friction: 0.8,
+        }
+      )
+    )
     // 왼쪽 아래 벽
     walls.push(
     Matter.Bodies.rectangle(
@@ -264,7 +278,8 @@ function Jar({ goals }) {
 
     if (engineRef.current) {
       engineRef.current.gravity.x = x * 1.1
-      engineRef.current.gravity.y = y * 1.1
+      // 아래 방향 중력은 유지
+      engineRef.current.gravity.y = 1.1
 
       // 잠들어 있는 Goal들을 다시 깨움
       bodiesRef.current.forEach((body) => {
@@ -326,11 +341,12 @@ function Jar({ goals }) {
         Jar 입구 위에서 랜덤한 위치로 시작
       */
 
+      
       const startX =
-        55 + Math.random() * 230
+        65 + Math.random() * 210
 
       const startY =
-        -80 - Math.random() * 100
+        190 + Math.random() * 30
 
       /*
         Goal의 물리 body
