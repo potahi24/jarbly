@@ -245,16 +245,26 @@ function Jar({ goals }) {
   useEffect(() => {
   if (!tiltEnabled) return
 
+ 
   const handleTilt = (event) => {
     const gamma = event.gamma ?? 0
+    const beta = event.beta ?? 0
 
+    // 좌우 기울기
     const x = Math.max(
       -1,
       Math.min(1, gamma / 45)
     )
 
+    // 앞뒤 기울기
+    const y = Math.max(
+      -1,
+      Math.min(1, beta / 45)
+    )
+
     if (engineRef.current) {
       engineRef.current.gravity.x = x * 1.1
+      engineRef.current.gravity.y = y * 1.1
 
       // 잠들어 있는 Goal들을 다시 깨움
       bodiesRef.current.forEach((body) => {
@@ -262,7 +272,6 @@ function Jar({ goals }) {
       })
     }
   }
-
   window.addEventListener(
     "deviceorientation",
     handleTilt
