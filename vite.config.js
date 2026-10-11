@@ -13,6 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Jarbly - Little Wins Jar',
         short_name: 'Jarbly',
+        src : "/jarbly-icon.svg",
         description: 'Collect your little wins, one jar at a time.',
         theme_color: '#f7f1e7',
         background_color: '#f7f1e7',
