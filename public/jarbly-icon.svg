@@ -1,0 +1,31 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#f7f1e7"/>
+  <path
+    d="M180 118h152v48H180z"
+    rx="12"
+    fill="#8a6a55"
+  />
+  <path
+    d="M168 166h176l-12 48 28 54v130
+       c0 25-20 45-45 45H197
+       c-25 0-45-20-45-45V268l28-54z"
+    fill="#cce2e3"
+    stroke="#8bb5b9"
+    stroke-width="12"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M190 280c30-25 100-25 130 0"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="12"
+    stroke-linecap="round"
+    opacity=".8"
+  />
+  <g font-size="58" text-anchor="middle">
+    <text x="220" y="315">✨</text>
+    <text x="293" y="365">🍓</text>
+    <text x="222" y="397">⭐</text>
+  </g>
+</svg>
