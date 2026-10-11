@@ -7,6 +7,7 @@ function Jar({ goals }) {
   const [tiltDebug, setTiltDebug] = useState({
           beta: null,
           gamma: null,
+          gravityY: null,
         })
   const sceneRef = useRef(null)
 
@@ -264,49 +265,33 @@ function Jar({ goals }) {
   if (!tiltEnabled) return
 
  
-  const handleTilt = (event) => {
-    const gamma = event.gamma ?? 0
-    const beta = event.beta ?? 0
+  
+const handleTilt = (event) => {
+  const gamma = event.gamma ?? 0
+  const beta = event.beta ?? 0
+
+  const x = Math.max(-1, Math.min(1, gamma / 45))
+  const y = Math.max(-1, Math.min(1, beta / 45))
+
+  if (engineRef.current) {
+    engineRef.current.gravity.x = x * 1.8
+    engineRef.current.gravity.y = Math.max(
+      -1.2,
+      Math.min(1.8, 1.1 + y * 2.0)
+    )
+
     setTiltDebug({
-      beta: event.beta,
-      gamma: event.gamma,
+      beta,
+      gamma,
+      gravityY: engineRef.current.gravity.y,
     })
 
-    console.log("Tilt:", {
-      beta: event.beta,
-      gamma: event.gamma,
-      gravityX: engineRef.current?.gravity.x,
-      gravityY: engineRef.current?.gravity.y,
+    bodiesRef.current.forEach((body) => {
+      Matter.Sleeping.set(body, false)
     })
-
-    // 좌우 기울기
-    const x = Math.max(
-      -1,
-      Math.min(1, gamma / 45)
-    )
-
-    // 앞뒤 기울기
-    const y = Math.max(
-      -1,
-      Math.min(1, beta / 45)
-    )
-
-    
-    if (engineRef.current) {
-      engineRef.current.gravity.x = x * 1.1
-
-      // 앞뒤 기울기도 반영하되,
-      // 중력이 완전히 뒤집히지 않도록 제한
-      engineRef.current.gravity.y = Math.max(
-        0.25,
-        Math.min(1.8, 1.1 + y * 0.7)
-      )
-
-      bodiesRef.current.forEach((body) => {
-        Matter.Sleeping.set(body, false)
-      })
-    }
   }
+}
+
   window.addEventListener(
     "deviceorientation",
     handleTilt
@@ -462,7 +447,25 @@ function Jar({ goals }) {
   */
 
   return (
-    <div className="jar-wrapper">  
+    <div className="jar-wrapper"> 
+    
+    <div
+      style={{
+        position: "absolute",
+        top: "8px",
+        left: "8px",
+        zIndex: 9999,
+        padding: "8px 12px",
+        borderRadius: "10px",
+        background: "#fff",
+        color: "#5c4033",
+        fontSize: "13px",
+      }}
+    >
+      <div>Beta: {tiltDebug.beta?.toFixed(1) ?? "Waiting..."}</div>
+      <div>Gamma: {tiltDebug.gamma?.toFixed(1) ?? "Waiting..."}</div>
+      <div>Gravity Y: {tiltDebug.gravityY?.toFixed(2) ?? "Waiting..."}</div>
+    </div> 
       <div
         style={{
           position: "absolute",
