@@ -1470,10 +1470,52 @@ body {
 }
 
 .tilt-button.enabled {
-  background: #e8f3f4;
-  border-color: #b5d4db;
+  background: #ae8d82;
+  border-color: #421d1d;
 }
 
 .tilt-button:hover {
   box-shadow: 0 5px 14px rgba(92, 64, 51, 0.16);
+}
+
+
+/* Home greeting */
+.home-greeting {
+  position: absolute;
+  top: 42px;
+  left: 24px;
+  right: 24px;
+  text-align: center;
+  color: #5c4033;
+  pointer-events: none;
+  animation: greeting-fade-in 0.6s ease both;
+}
+
+.home-greeting h1 {
+  margin: 0;
+  font-family: inherit;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  line-height: 1.35;
+}
+
+.home-greeting p {
+  margin: 7px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: #9b8273;
+  letter-spacing: 0.2px;
+}
+
+@keyframes greeting-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

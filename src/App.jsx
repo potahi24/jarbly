@@ -7,7 +7,28 @@ import Calendar from "./components/Calendar"
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home")
-  
+    
+  const [currentHour, setCurrentHour] = useState(
+    new Date().getHours()
+  )
+
+  useEffect(() => {
+    const updateHour = () => {
+      setCurrentHour(new Date().getHours())
+    }
+
+    const timer = setInterval(updateHour, 60 * 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const greeting =
+    currentHour < 12
+      ? "Good morning ☀️"
+      : currentHour < 18
+        ? "Good afternoon 🌷"
+        : "Good evening 🌙"
+
 const [todos, setTodos] = useState(() => {
       try {
         const saved = localStorage.getItem("jarbly-todos")
@@ -81,8 +102,13 @@ const [todos, setTodos] = useState(() => {
             onClick={() => setCurrentPage("calendar")}
             aria-label="Open calendar"
           >
-            <span>▦</span>
+            <span>🗓️</span>
           </button>
+
+        <div className="home-greeting">
+          <h1>{greeting}</h1>
+          <p>Every little win matters ✨</p>
+        </div>
 
           <Jar goals={wins} />
         </section>

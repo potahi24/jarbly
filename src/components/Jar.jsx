@@ -165,11 +165,6 @@ function Jar({ goals }) {
         })
       }
 
-      setTiltDebug({
-        beta,
-        gamma,
-        gravityY: engine?.gravity.y ?? 1.1,
-      })
     }
 
     window.addEventListener("deviceorientation", handleTilt)
@@ -240,7 +235,21 @@ function Jar({ goals }) {
     })
   }, [goals])
 
+  
   const enableTilt = async () => {
+    // 이미 켜져 있다면 끄기
+    if (tiltEnabled) {
+      setTiltEnabled(false)
+
+      if (engineRef.current) {
+        engineRef.current.gravity.x = 0
+        engineRef.current.gravity.y = 1.1
+      }
+
+      return
+    }
+
+    // 꺼져 있다면 켜기
     try {
       if (
         typeof DeviceOrientationEvent !== "undefined" &&
@@ -265,12 +274,12 @@ function Jar({ goals }) {
   return (
     <div className="jar-wrapper">
 
-      <button
-        className={`tilt-button ${tiltEnabled ? "enabled" : ""}`}
-        onClick={enableTilt}
-      >
-        {tiltEnabled ? "Tilt on" : "Tilt jar"}
-      </button>
+    <button
+      className={`tilt-button ${tiltEnabled ? "enabled" : ""}`}
+      onClick={enableTilt}
+    >
+      {tiltEnabled ? "Tilt off" : "Tilt jar"}
+    </button>
 
       <div className="jar-neck" aria-hidden="true" />
 
