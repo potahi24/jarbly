@@ -50,7 +50,13 @@ function Jar({ goals }) {
     // Jar 바닥
     
     // Jar 입구 위쪽 안전벽
-
+    walls.push(
+      Matter.Bodies.rectangle(width / 2, 110, 240, 12, {
+        isStatic: true,
+        restitution: 0.25,
+        friction: 0.8,
+      })
+    )
     // 왼쪽 아래 벽
     walls.push(
     Matter.Bodies.rectangle(
@@ -336,22 +342,15 @@ if (engineRef.current) {
         Goal의 물리 body
       */
 
-      const body =
-        Matter.Bodies.circle(
-          startX,
-          startY,
-          radius,
-          {
-            restitution: 0.65,
-            friction: 0.35,
-            frictionAir: 0.005,
-            density: 0.002,
-
-            // 충분히 안정되면 Matter가
-            // body를 자동으로 sleep시킬 수 있음
-            sleepThreshold: 30,
-          }
-        )
+      
+      const body = Matter.Bodies.circle(startX, startY, radius, {
+        restitution: 0.45,
+        friction: 0.12,
+        frictionStatic: 0.25,
+        frictionAir: 0.008,
+        density: 0.0015,
+        sleepThreshold: 60,
+      })
 
       /*
         각각 조금씩 다른 방향과 속도로 떨어짐
