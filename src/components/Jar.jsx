@@ -264,6 +264,13 @@ function Jar({ goals }) {
     const gamma = event.gamma ?? 0
     const beta = event.beta ?? 0
 
+    console.log("Tilt:", {
+      beta: event.beta,
+      gamma: event.gamma,
+      gravityX: engineRef.current?.gravity.x,
+      gravityY: engineRef.current?.gravity.y,
+    })
+
     // 좌우 기울기
     const x = Math.max(
       -1,
