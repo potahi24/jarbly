@@ -4,6 +4,10 @@ import Matter from "matter-js"
 
 function Jar({ goals }) {
   const [tiltEnabled, setTiltEnabled] = useState(false)
+  const [tiltDebug, setTiltDebug] = useState({
+          beta: null,
+          gamma: null,
+        })
   const sceneRef = useRef(null)
 
   const engineRef = useRef(null)
@@ -263,6 +267,10 @@ function Jar({ goals }) {
   const handleTilt = (event) => {
     const gamma = event.gamma ?? 0
     const beta = event.beta ?? 0
+    setTiltDebug({
+      beta: event.beta,
+      gamma: event.gamma,
+    })
 
     console.log("Tilt:", {
       beta: event.beta,
@@ -454,7 +462,23 @@ function Jar({ goals }) {
   */
 
   return (
-    <div className="jar-wrapper">
+    <div className="jar-wrapper">  
+      <div
+        style={{
+          position: "absolute",
+          top: "8px",
+          left: "8px",
+          zIndex: 9999,
+          padding: "8px 12px",
+          borderRadius: "10px",
+          background: "#fff",
+          color: "#5c4033",
+          fontSize: "13px",
+        }}
+      >
+        <div>Beta: {tiltDebug.beta?.toFixed(1) ?? "Waiting..."}</div>
+        <div>Gamma: {tiltDebug.gamma?.toFixed(1) ?? "Waiting..."}</div>
+      </div>
        <button
         className={`tilt-button ${tiltEnabled ? "enabled" : ""}`}
         onClick={async () => {
