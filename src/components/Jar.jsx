@@ -275,16 +275,7 @@ const handleTilt = (event) => {
 
   if (engineRef.current) {
     engineRef.current.gravity.x = x * 1.8
-    engineRef.current.gravity.y = Math.max(
-      -1.2,
-      Math.min(1.8, 1.1 + y * 2.0)
-    )
-
-    setTiltDebug({
-      beta,
-      gamma,
-      gravityY: engineRef.current.gravity.y,
-    })
+    engineRef.current.gravity.y = y * 1.8
 
     bodiesRef.current.forEach((body) => {
       Matter.Sleeping.set(body, false)
