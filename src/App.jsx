@@ -146,6 +146,14 @@ const [todos, setTodos] = useState(() => {
         <Calendar todos={todos} />
       )}
 
+      
+      {currentPage === "tasks" && (
+        <TodoList
+          todos={todos}
+          onToggle={toggleTodo}
+        />
+      )}
+
       <BottomNav
         currentPage={currentPage}
         onNavigate={setCurrentPage}
